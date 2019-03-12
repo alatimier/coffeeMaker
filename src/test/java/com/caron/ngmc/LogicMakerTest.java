@@ -11,7 +11,7 @@ class LogicMakerTest {
     @Test
     public void shouldSendChosenSugarFreeCoffeeBeverageToDrinkMaker() {
         // Given
-        Order order = new Order(Beverage.COFFEE, 0, 0.6);
+        Order order = new Order(Beverage.COFFEE, 0, 0.6, false);
 
         //When
         String m = logicMaker.computeOrder(order);
@@ -23,7 +23,7 @@ class LogicMakerTest {
     @Test
     public void shouldSendChosenSugarFreeTeaBeverageToDrinkMaker() {
         // Given
-        Order order = new Order(Beverage.TEA, 0, 0.4);
+        Order order = new Order(Beverage.TEA, 0, 0.4, false);
 
         //When
         String m = logicMaker.computeOrder(order);
@@ -35,7 +35,7 @@ class LogicMakerTest {
     @Test
     public void shouldSendChosenSugarFreeChocolateBeverageToDrinkMaker() {
         // Given
-        Order order = new Order(Beverage.CHOCOLATE, 0, 0.5);
+        Order order = new Order(Beverage.CHOCOLATE, 0, 0.5, false);
 
         //When
         String m = logicMaker.computeOrder(order);
@@ -47,7 +47,7 @@ class LogicMakerTest {
     @Test
     public void shouldSendChosenBeverageWithSugarAndAddStickToDrinkMaker() {
         // Given
-        Order order = new Order(Beverage.COFFEE, 1, 0.6);
+        Order order = new Order(Beverage.COFFEE, 1, 0.6, false);
 
         //When
         String m = logicMaker.computeOrder(order);
@@ -59,7 +59,7 @@ class LogicMakerTest {
     @Test
     public void shouldClaimFortyCentsForCoffeeIfClientDidNotPay() {
         // Given
-        Order order = new Order(Beverage.COFFEE, 1, 0d);
+        Order order = new Order(Beverage.COFFEE, 1, 0d, false);
 
         //When
         String m = logicMaker.computeOrder(order);
@@ -71,7 +71,7 @@ class LogicMakerTest {
     @Test
     public void shouldClaimRemainingAmountForCoffeeIfClientDidNotPayEnough() {
         // Given
-        Order order = new Order(Beverage.COFFEE, 1, 0.3);
+        Order order = new Order(Beverage.COFFEE, 1, 0.3, false);
 
         //When
         String m = logicMaker.computeOrder(order);
@@ -83,13 +83,49 @@ class LogicMakerTest {
     @Test
     public void shouldSendChosenSugarFreeCoffeeBeverageToDrinkMakerEvenIfClientMakeMoreThanAsked() {
         // Given
-        Order order = new Order(Beverage.COFFEE, 0, 0.9);
+        Order order = new Order(Beverage.COFFEE, 0, 0.9, false);
 
         //When
         String m = logicMaker.computeOrder(order);
 
         // Then
         assertEquals("C::", m);
+    }
+
+    @Test
+    public void shouldApplyExtraHotBeverageToDrinkMakerIfAsked() {
+        // Given
+        Order order = new Order(Beverage.COFFEE, 0, 0.9, true);
+
+        //When
+        String m = logicMaker.computeOrder(order);
+
+        // Then
+        assertEquals("Ch::", m);
+    }
+
+    @Test
+    public void shouldSendSugarFreeOrangeJuiceToDrinkMaker() {
+        // Given
+        Order order = new Order(Beverage.ORANGE_JUICE, 0, 0.9, false);
+
+        //When
+        String m = logicMaker.computeOrder(order);
+
+        // Then
+        assertEquals("O::", m);
+    }
+
+    @Test
+    public void shouldNotBeAbleToAskHotOrangeJuiceToDrinkMaker() {
+        // Given
+        Order order = new Order(Beverage.ORANGE_JUICE, 0, 0.9, true);
+
+        //When
+        String m = logicMaker.computeOrder(order);
+
+        // Then
+        assertEquals("O::", m);
     }
 
 }
