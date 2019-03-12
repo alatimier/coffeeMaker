@@ -9,7 +9,7 @@ class LogicMakerTest {
     private LogicMaker logicMaker = new LogicMaker();
 
     @Test
-    public void shouldSendChosenSugarFreeCoffeeBeverageToDrinkMaker() {
+    void shouldSendChosenSugarFreeCoffeeBeverageToDrinkMaker() {
         // Given
         Order order = new Order(Beverage.COFFEE, 0, 0.6, false);
 
@@ -21,7 +21,7 @@ class LogicMakerTest {
     }
 
     @Test
-    public void shouldSendChosenSugarFreeTeaBeverageToDrinkMaker() {
+    void shouldSendChosenSugarFreeTeaBeverageToDrinkMaker() {
         // Given
         Order order = new Order(Beverage.TEA, 0, 0.4, false);
 
@@ -33,7 +33,7 @@ class LogicMakerTest {
     }
 
     @Test
-    public void shouldSendChosenSugarFreeChocolateBeverageToDrinkMaker() {
+    void shouldSendChosenSugarFreeChocolateBeverageToDrinkMaker() {
         // Given
         Order order = new Order(Beverage.CHOCOLATE, 0, 0.5, false);
 
@@ -45,7 +45,7 @@ class LogicMakerTest {
     }
 
     @Test
-    public void shouldSendChosenBeverageWithSugarAndAddStickToDrinkMaker() {
+    void shouldSendChosenBeverageWithSugarAndAddStickToDrinkMaker() {
         // Given
         Order order = new Order(Beverage.COFFEE, 1, 0.6, false);
 
@@ -57,7 +57,7 @@ class LogicMakerTest {
     }
 
     @Test
-    public void shouldClaimFortyCentsForCoffeeIfClientDidNotPay() {
+    void shouldClaimFortyCentsForCoffeeIfClientDidNotPay() {
         // Given
         Order order = new Order(Beverage.COFFEE, 1, 0d, false);
 
@@ -69,7 +69,7 @@ class LogicMakerTest {
     }
 
     @Test
-    public void shouldClaimRemainingAmountForCoffeeIfClientDidNotPayEnough() {
+    void shouldClaimRemainingAmountForCoffeeIfClientDidNotPayEnough() {
         // Given
         Order order = new Order(Beverage.COFFEE, 1, 0.3, false);
 
@@ -81,7 +81,7 @@ class LogicMakerTest {
     }
 
     @Test
-    public void shouldSendChosenSugarFreeCoffeeBeverageToDrinkMakerEvenIfClientMakeMoreThanAsked() {
+    void shouldSendChosenSugarFreeCoffeeBeverageToDrinkMakerEvenIfClientMakeMoreThanAsked() {
         // Given
         Order order = new Order(Beverage.COFFEE, 0, 0.9, false);
 
@@ -93,7 +93,7 @@ class LogicMakerTest {
     }
 
     @Test
-    public void shouldApplyExtraHotBeverageToDrinkMakerIfAsked() {
+    void shouldApplyExtraHotBeverageToDrinkMakerIfAsked() {
         // Given
         Order order = new Order(Beverage.COFFEE, 0, 0.9, true);
 
@@ -105,7 +105,7 @@ class LogicMakerTest {
     }
 
     @Test
-    public void shouldSendSugarFreeOrangeJuiceToDrinkMaker() {
+    void shouldSendSugarFreeOrangeJuiceToDrinkMaker() {
         // Given
         Order order = new Order(Beverage.ORANGE_JUICE, 0, 0.9, false);
 
@@ -117,7 +117,7 @@ class LogicMakerTest {
     }
 
     @Test
-    public void shouldNotBeAbleToAskHotOrangeJuiceToDrinkMaker() {
+    void shouldNotBeAbleToAskHotOrangeJuiceToDrinkMaker() {
         // Given
         Order order = new Order(Beverage.ORANGE_JUICE, 0, 0.9, true);
 
@@ -129,7 +129,7 @@ class LogicMakerTest {
     }
 
     @Test
-    public void shouldGenerateReport() {
+    void shouldGenerateReport() {
         // Given
         logicMaker.computeOrder(new Order(Beverage.ORANGE_JUICE, 0, 0.9, true));
         logicMaker.computeOrder(new Order(Beverage.ORANGE_JUICE, 0, 0.9, true));
@@ -140,7 +140,7 @@ class LogicMakerTest {
         String report = logicMaker.computeReport();
 
         // Then
-        assertEquals("C:1,T:1,H:0,O:2 => 2,2€", report);
+        assertEquals("C:1,T:1,H:0,O:2 => 2.2€", report);
     }
 
 }

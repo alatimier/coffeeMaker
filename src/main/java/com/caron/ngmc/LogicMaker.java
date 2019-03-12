@@ -1,16 +1,13 @@
 package com.caron.ngmc;
 
-import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LogicMaker {
+class LogicMaker {
 
     private Map<Beverage, Integer> database = new HashMap<>();
-    private DecimalFormat df = new DecimalFormat("#.#");
 
-
-    public String computeOrder(Order order) {
+    String computeOrder(Order order) {
         String beverageCode = order.getBeverage().code;
         String extraHot = order.isExtraHot() && order.getBeverage().canBeHotter ? "h" : "";
         String sugar = order.getNbSugars() == 0 ? "" : String.valueOf(order.getNbSugars());
@@ -20,27 +17,20 @@ public class LogicMaker {
             return String.format("M:Gimme %s€, bitch !", order.getBeverage().price - order.getAmount());
         }
 
-
-        int currentSell = database.get(order.getBeverage()) == null ? 0 : database.get(order.getBeverage());
-        database.put(order.getBeverage(), currentSell + 1);
-
+        database.merge(order.getBeverage(), 1, Integer::sum);
         return String.format("%s%s:%s:%s", beverageCode, extraHot, sugar, stick);
     }
 
-    public String computeReport() {
+    String computeReport() {
         double total = database.entrySet().stream().mapToDouble(e -> e.getKey().price * e.getValue()).sum();
         return String.format(
                 "%s:%s,%s:%s,%s:%s,%s:%s => %s€",
-                Beverage.COFFEE.code, getNumberOfSells(Beverage.COFFEE),
-                Beverage.TEA.code, getNumberOfSells(Beverage.TEA),
-                Beverage.CHOCOLATE.code, getNumberOfSells(Beverage.CHOCOLATE),
-                Beverage.ORANGE_JUICE.code, getNumberOfSells(Beverage.ORANGE_JUICE),
-                df.format(total)
+                Beverage.COFFEE.code, database.getOrDefault(Beverage.COFFEE, 0),
+                Beverage.TEA.code, database.getOrDefault(Beverage.TEA, 0),
+                Beverage.CHOCOLATE.code, database.getOrDefault(Beverage.CHOCOLATE, 0),
+                Beverage.ORANGE_JUICE.code, database.getOrDefault(Beverage.ORANGE_JUICE, 0),
+                Math.round(total * 10) / 10.0
         );
-    }
-
-    private int getNumberOfSells(Beverage b) {
-        return database.get(b) == null ? 0 : database.get(b);
     }
 
 }
