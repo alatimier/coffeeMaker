@@ -128,4 +128,19 @@ class LogicMakerTest {
         assertEquals("O::", m);
     }
 
+    @Test
+    public void shouldGenerateReport() {
+        // Given
+        logicMaker.computeOrder(new Order(Beverage.ORANGE_JUICE, 0, 0.9, true));
+        logicMaker.computeOrder(new Order(Beverage.ORANGE_JUICE, 0, 0.9, true));
+        logicMaker.computeOrder(new Order(Beverage.COFFEE, 0, 0.9, true));
+        logicMaker.computeOrder(new Order(Beverage.TEA, 0, 0.9, true));
+
+        // When
+        String report = logicMaker.computeReport();
+
+        // Then
+        assertEquals("C:1,T:1,H:0,O:2 => 2,2€", report);
+    }
+
 }
